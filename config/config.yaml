@@ -1,0 +1,17 @@
+gcp:
+  bucket_name: "mlops-gcp-project1-data"
+  project_id: "mlops-gcp-project1"
+  region: "europe-west1"
+
+data:
+  raw_data_path: "raw-data/dataset.csv"
+  processed_data_path: "processed-data/"
+  test_size: 0.2
+  random_state: 42
+
+model:
+  model_path: "models/"
+  experiment_name: "mlops-project1"
+
+mlflow:
+  tracking_uri: "http://localhost:5000"

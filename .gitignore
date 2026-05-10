@@ -1,6 +1,19 @@
-gcp-key.json
-*.json key
+venv/
+
+mlruns/
+
+.ipynb_checkpoints/
+
 .env
+
 __pycache__/
 *.pyc
-.DS_Store
+*.pyo
+
+gcp-key.json
+service-account-*.json
+
+*.egg-info/
+.eggs/
+dist/
+build/
