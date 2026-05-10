@@ -4,7 +4,7 @@ gcp:
   region: "europe-west1"
 
 data:
-  raw_data_path: "raw-data/dataset.csv"
+  raw_data_path: "raw-data/train.csv"
   processed_data_path: "processed-data/"
   test_size: 0.2
   random_state: 42
