@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from google.cloud import storage
 import google.cloud.exceptions
 
-# Setup logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -16,7 +15,7 @@ logger = logging.getLogger(__name__)
 class DataIngester:
     def __init__(self, config_path: str):
         load_dotenv()
-
+        
         with open(config_path, "r") as f:
             self.config = yaml.safe_load(f)
             
@@ -26,11 +25,13 @@ class DataIngester:
         self.client = None
 
     def _create_local_dirs(self):
+        """Creates the data/raw directory structure."""
         Path("data/raw").mkdir(parents=True, exist_ok=True)
         Path("data/processed").mkdir(parents=True, exist_ok=True)
         logger.info("Local directories ensured.")
 
     def connect(self):
+        """Initializes the GCS Client."""
         try:
             self.client = storage.Client()
             logger.info(f"Successfully connected to GCS. Project: {self.client.project}")
@@ -40,8 +41,9 @@ class DataIngester:
 
     def download_raw_data(self) -> str:
         """Downloads the blob from GCS to local disk."""
-        # Define where the file will land locally
-        # We can extract the filename (train.csv) from the GCS path
+        if self.client is None:
+            logger.error("GCS client not initialized. Call connect() first.")
+            raise RuntimeError("GCS client is None. Authentication required.")
         filename = os.path.basename(self.raw_data_path)
         local_path = os.path.join("data/raw", filename)
         
@@ -72,6 +74,5 @@ class DataIngester:
         return local_file_path
 
 if __name__ == "__main__":
-    # This allows us to test the script directly
     ingester = DataIngester(config_path="config/config.yaml")
     ingester.run()
