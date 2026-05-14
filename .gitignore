@@ -18,5 +18,8 @@ service-account-*.json
 dist/
 build/
 
+data/
 data/raw/
 data/processed/
+
+models/
